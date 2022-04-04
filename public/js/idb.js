@@ -37,7 +37,7 @@ function uploadBudget(){
     const transaction = db.transaction(["new_budget"],"readwrite");
     const budgetObjectStore = transaction.objectStore("new_budget");
     const getAll = budgetObjectStore.getAll();
-
+    
     getAll.onsuccess = function() {
         if (getAll.result.length > 0) {
           fetch('/api/transaction', {
@@ -56,7 +56,7 @@ function uploadBudget(){
 
               const transaction = db.transaction(['new_budget'], 'readwrite');
 
-              const budgetObjectStore = transaction.objectStore('new_budgeta');
+              const budgetObjectStore = transaction.objectStore('new_budget');
 
               budgetObjectStore.clear();
     
