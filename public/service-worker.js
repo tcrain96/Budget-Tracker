@@ -1,8 +1,16 @@
 const FILES_TO_CACHE = [
-    "index.html",
-    "css/styles.css",
-    "js/index.js",
-    "js/idb.js",
+    "./css/styles.css",
+    "./icons/icon-72x72.png",
+    "./icons/icon-96x96.png",
+    "./icons/icon-128x128.png",
+    "./icons/icon-144x144.png",
+    "./icons/icon-152x152.png",
+    "./icons/icon-192x192.png",
+    "./icons/icon-384x384.png",
+    "./icons/icon-512x512.png",
+    "./js/index.js",
+    "./js/idb.js",
+    "./index.html"
 ];
 
 const APP_PREFIX = "Budget_Tracker-";
@@ -38,17 +46,28 @@ self.addEventListener('activate', function(e) {
     );
 });
 
-self.addEventListener('fetch', function (e) {
-    console.log('fetch request : ' + e.request.url)
-    e.respondWith(
-      caches.match(e.request).then(function (request) {
-        if (request) { 
-          console.log('responding with cache : ' + e.request.url)
-          return request
-        } else {       
-          console.log('file is not cached, fetching : ' + e.request.url)
-          return fetch(e.request)
+self.addEventListener('fetch', (event) => {
+  event.respondWith((async() => {
+
+    const cache = await caches.open(CACHE_NAME);
+
+    try {
+        const cachedResponse = await cache.match(event.request);
+        if(cachedResponse) {
+            console.log('cachedResponse: ', event.request.url);
+            return cachedResponse;
         }
-      })
-    )
-})
+
+        const fetchResponse = await fetch(event.request);
+        if(fetchResponse) {
+            console.log('fetchResponse: ', event.request.url);
+            await cache.put(event.request, fetchResponse.clone());
+            return fetchResponse;
+        }
+    }   catch (error) {
+        console.log('Fetch failed: ', error);
+        const cachedResponse = await cache.match('/en/offline.html');
+        return cachedResponse;
+    }
+  })());
+});
