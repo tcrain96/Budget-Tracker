@@ -4,7 +4,7 @@
 
 ## Description
 
-My application allows you to track your budget, and works wether offline or online.
+An application that enables easy financial tracking based on fund amounts.
 
 ## Table of Contents
 
