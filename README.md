@@ -1,6 +1,6 @@
 # Budget Tracker
 
-[Live URL](https://fathomless-earth-98550.herokuapp.com/)
+[Budget Tracker Live URL](https://fathomless-earth-98550.herokuapp.com/)
 
 ![Budget Tracker Home Page](./Fullscreen.png?raw=true "Home - Budget Tracker")
 
